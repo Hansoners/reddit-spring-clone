@@ -20,7 +20,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @NoArgsConstructor
 @Entity
 
-class User {
+public class User {
     @Id
     @GeneratedValue(strategy = SEQUENCE)
     private long userId;

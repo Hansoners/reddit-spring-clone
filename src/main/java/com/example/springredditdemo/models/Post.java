@@ -18,7 +18,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Entity
 @Builder
 
-class Post {
+public class Post {
 
     @Id
     @GeneratedValue(strategy = SEQUENCE)

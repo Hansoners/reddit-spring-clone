@@ -1,4 +1,4 @@
-package com.example.springredditdemo.models;
+package com.example.springredditdemo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Email {
-    private String subject;
+public class NotificationEmail {
     private String recipient;
+    private String subject;
     private String body;
 }

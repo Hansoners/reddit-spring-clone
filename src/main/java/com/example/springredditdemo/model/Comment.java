@@ -1,4 +1,4 @@
-package com.example.springredditdemo.models;
+package com.example.springredditdemo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,10 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 import java.time.Instant;
-import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -18,17 +17,17 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @AllArgsConstructor
 @Entity
 @Builder
-public class Subreddit {
+public class Comment {
     @Id
     @GeneratedValue(strategy = SEQUENCE)
-    private long id;
-    @NotBlank(message = "Subreddit name is required")
-    private String name;
-    @NotBlank(message = "Subreddit description is required")
-    private String description;
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Post> postsList;
+    private Long id;
+    @NotEmpty(message = "Text cannot be empty")
+    private String text;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "postId", referencedColumnName = "postId")
+    private Post post;
     private Instant createdDate;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private User user;
 }

@@ -1,8 +1,8 @@
 package com.example.springredditdemo.repository;
 
-import com.example.springredditdemo.models.Post;
-import com.example.springredditdemo.models.User;
-import com.example.springredditdemo.models.Voting;
+import com.example.springredditdemo.model.Post;
+import com.example.springredditdemo.model.User;
+import com.example.springredditdemo.model.Voting;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

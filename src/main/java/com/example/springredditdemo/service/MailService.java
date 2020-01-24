@@ -23,11 +23,11 @@ public class MailService {
     void sendMail(NotificationEmail notificationEmail) throws RedditException {
 
         MimeMessagePreparator messagePreparator = mimeMessage -> {
-            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-            messageHelper.setFrom("springreddit@email.com");
-            messageHelper.setTo(notificationEmail.getRecipient());
-            messageHelper.setSubject(notificationEmail.getSubject());
-            messageHelper.setText(mailContentBuilder.build(notificationEmail.getBody()));
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
+            helper.setFrom("reddit-clone@redditclone.com");
+            helper.setTo(notificationEmail.getRecipient());
+            helper.setSubject(notificationEmail.getSubject());
+            helper.setText(mailContentBuilder.build(notificationEmail.getBody()));
         };
 
         try {

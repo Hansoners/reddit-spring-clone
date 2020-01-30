@@ -44,7 +44,7 @@ public class AuthService {
         User user = new User();
         user.setCreated(Instant.now());
         user.setUsername(registerRequest.getUsername());
-        user.setPassword(registerRequest.getPassword());
+        user.setPassword(encodePassword(registerRequest.getPassword()));
         user.setEmail((registerRequest.getEmail()));
         user.setEnabled(false);
         userRepository.save(user);
@@ -70,8 +70,7 @@ public class AuthService {
 
     public void verifyAccount(String token) {
         Optional<AuthenticationToken> authenticationTokenOptional = authenticationRepository.findByToken(token);
-        authenticationTokenOptional.orElseThrow(() -> new RedditException("Token is invalid."));
-        fetchAndEnable(authenticationTokenOptional.get());
+        fetchAndEnable(authenticationTokenOptional.orElseThrow(() -> new RedditException("Invalid Token")));
     }
 
     @Transactional

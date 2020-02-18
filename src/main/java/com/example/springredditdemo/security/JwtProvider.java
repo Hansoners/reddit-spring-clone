@@ -1,6 +1,7 @@
 package com.example.springredditdemo.security;
 
 import com.example.springredditdemo.exception.RedditException;
+import io.jsonwebtoken.Claims;
 import org.springframework.security.core.userdetails.User;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.core.Authentication;
@@ -11,6 +12,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.*;
 import java.security.cert.CertificateException;
+
+import static io.jsonwebtoken.Jwts.parser;
 
 @Service
 public class JwtProvider {
@@ -45,5 +48,23 @@ public class JwtProvider {
         } catch (UnrecoverableKeyException | NoSuchAlgorithmException | KeyStoreException e) {
             throw new RedditException("Exception while loading keystore.");
         }
+    }
+
+    public String getUsernameFromJWT(String jwt) {
+        Claims claims = parser().setSigningKey(getPublicKey()).parseClaimsJws(jwt).getBody();
+        return claims.getSubject();
+    }
+
+    private PublicKey getPublicKey() {
+        try {
+            return keyStore.getCertificate("springreddit").getPublicKey();
+        } catch (KeyStoreException e) {
+            throw new RedditException("Exception occurred while retrieving public key from keystore");
+        }
+    }
+
+    public boolean validateToken(String jwt) {
+        parser().setSigningKey(getPublicKey()).parseClaimsJws(jwt);
+        return true;
     }
 }

@@ -4,6 +4,7 @@ import com.example.springredditdemo.dto.SubredditDto;
 import com.example.springredditdemo.service.SubredditService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/subreddit")
 @AllArgsConstructor
-@NoArgsConstructor
 public class SubredditController {
 
     private final SubredditService subredditService;

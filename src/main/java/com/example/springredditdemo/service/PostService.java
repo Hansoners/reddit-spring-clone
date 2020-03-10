@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -45,9 +46,22 @@ public class PostService {
         return postRepository.findAll().stream().map(postMapper::maptoDto).collect(toList());
     }
 
+    @Transactional
     public void save(PostRequest postRequest) {
-        Subreddit subreddit = subredditRepository.findByName(postRequest.getSubredditName()).orElseThrow(() -> new SubredditException(postRequest.getSubredditName()));
-        postRepository.save(postMapper.map(postRequest, subreddit, authService.getCurrentUser()));
+        postRepository.save(mapToPost(postRequest));
+    }
+    private Post mapToPost(PostRequest postRequest) {
+        Subreddit subreddit = subredditRepository.findByName(postRequest.getSubredditName())
+                .orElseThrow(() -> new SubredditException(postRequest.getSubredditName()));
+        return Post.builder()
+                .postName(postRequest.getPostName())
+                .description(postRequest.getDescription())
+                .url(postRequest.getUrl())
+                .createdDate(Instant.now())
+                .voteCount(0)
+                .subreddit(subreddit)
+                .user(authService.getCurrentUser())
+                .build();
     }
 
     @Transactional(readOnly = true)

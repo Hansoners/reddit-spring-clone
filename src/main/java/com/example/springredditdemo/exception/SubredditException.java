@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class SubredditException extends RuntimeException {
     public SubredditException(String error) {
-        super(error);
+        super("Subreddit" + error);
     }
 }

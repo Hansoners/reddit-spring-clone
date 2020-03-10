@@ -9,6 +9,8 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+import java.time.Instant;
+
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -26,7 +28,7 @@ public class Post {
     @NotBlank(message = "Name of post cannot be blank")
     private String postName;
     @Nullable
-    private String postUrl;
+    private String url;
     @Nullable
     @Lob
     private String description;
@@ -37,4 +39,5 @@ public class Post {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "id", referencedColumnName = "id")
     private Subreddit subreddit;
+    private Instant createdDate;
 }

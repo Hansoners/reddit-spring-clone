@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 import static org.springframework.http.ResponseEntity.status;
 
 @RestController
@@ -22,12 +25,12 @@ public class CommentsController {
     }
 
     @GetMapping
-    public ResponseEntity<Void> getAllCommentsByPost(@RequestParam("postId") Long postId) {
+    public ResponseEntity<List<CommentsDto>> getAllCommentsByPost(@RequestParam("postId") Long postId) {
         return status(HttpStatus.OK).body(commentsService.getCommentsByPost(postId));
     }
 
     @GetMapping
-    public ResponseEntity<Void> getAllCommentsByUser(@RequestParam("user") String user) {
+    public ResponseEntity<List<CommentsDto>> getAllCommentsByUser(@RequestParam("user") String user) {
         return status(HttpStatus.OK).body(commentsService.getCommentsByUser(user));
     }
 }
